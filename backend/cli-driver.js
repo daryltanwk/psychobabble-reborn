@@ -3,25 +3,25 @@
 'use strict';
 
 var rlsync = require('readline-sync');
-var Round = require('./round');
+var Round = require('./game/round');
 
 function testFactory() {
   var generator = function() {
     return [
-      {id: 1, root: 'the'},
-      {id: 2, root: 'quick'},
-      {id: 3, root: 'brown'},
-      {id: 4, root: 'fox'},
-      {id: 5, root: 'jumps'},
-      {id: 6, root: 'over'},
-      {id: 7, root: 'the'},
-      {id: 8, root: 'lazy'},
-      {id: 9, root: 'dog'},
+      { id: 1, root: 'the' },
+      { id: 2, root: 'quick' },
+      { id: 3, root: 'brown' },
+      { id: 4, root: 'fox' },
+      { id: 5, root: 'jumps' },
+      { id: 6, root: 'over' },
+      { id: 7, root: 'the' },
+      { id: 8, root: 'lazy' },
+      { id: 9, root: 'dog' },
     ];
   };
 
   var builder = function(words) {
-    return words.map(function(word) { return word.root; }).join(' ');
+    return words.map(w => w.root).join(' ');
   };
 
   return {
@@ -72,7 +72,7 @@ function BuildQuestion(round) {
   players.forEach(function(player) {
     var ok = false;
     while (!ok) {
-      var sentence = rlsync.question(player + '\'s sentence: ');
+      var sentence = rlsync.question(player + "'s sentence: ");
 
       var response = [];
       var tokens = sentence.split(' ');
@@ -96,7 +96,7 @@ function Vote(round) {
   players.forEach(function(player) {
     var ok = false;
     while (!ok) {
-      var vote = rlsync.question(player + '\'s vote: ');
+      var vote = rlsync.question(player + "'s vote: ");
       ok = round.vote(player, vote);
     }
   });

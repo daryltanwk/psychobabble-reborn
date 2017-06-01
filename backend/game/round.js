@@ -21,8 +21,8 @@ function Round(factory, players) {
   };
 
   var wordsAllowed = function(inputWords) {
-    inputWords = new Set(inputWords.map((w) => w.id));
-    var roundWords = new Set(_words.map((w) => w.id));
+    inputWords = new Set(inputWords.map(w => w.id));
+    var roundWords = new Set(_words.map(w => w.id));
 
     for (let w of inputWords) {
       if (!roundWords.has(w)) {
@@ -34,13 +34,15 @@ function Round(factory, players) {
 
   var hasDuplicate = function(inputWords) {
     var size = inputWords.length;
-    var setSize = (new Set(inputWords.map((w) => w.id))).size;
+    var setSize = new Set(inputWords.map(w => w.id)).size;
 
     return size !== setSize;
   };
 
   var playerExist = function(id) {
-    var player = _players.find(function(p) { return p === id; });
+    var player = _players.find(function(p) {
+      return p === id;
+    });
     return player !== undefined;
   };
 
@@ -124,8 +126,12 @@ function Round(factory, players) {
     vote: vote,
     results: results,
     submitSentence: submitSentence,
-    players: function() { return _players.slice(); },
-    state: function() { return _state; },
+    players: () => {
+      return _players.slice();
+    },
+    state: () => {
+      return _state;
+    },
   };
 }
 

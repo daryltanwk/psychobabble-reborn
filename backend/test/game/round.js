@@ -1,6 +1,5 @@
-var expect  = require('chai').expect;
+var expect = require('chai').expect;
 var Round = require('../../game/round');
-
 
 function TestRound(players) {
   return Round(testFactory(), players);
@@ -9,20 +8,20 @@ function TestRound(players) {
 function testFactory() {
   var generator = function() {
     return [
-      {id: 1, root: 'the'},
-      {id: 2, root: 'quick'},
-      {id: 3, root: 'brown'},
-      {id: 4, root: 'fox'},
-      {id: 5, root: 'jumps'},
-      {id: 6, root: 'over'},
-      {id: 7, root: 'the'},
-      {id: 8, root: 'lazy'},
-      {id: 9, root: 'dog'},
+      { id: 1, root: 'the' },
+      { id: 2, root: 'quick' },
+      { id: 3, root: 'brown' },
+      { id: 4, root: 'fox' },
+      { id: 5, root: 'jumps' },
+      { id: 6, root: 'over' },
+      { id: 7, root: 'the' },
+      { id: 8, root: 'lazy' },
+      { id: 9, root: 'dog' },
     ];
   };
 
   var builder = function(words) {
-    return words.map(function(word) { return word.root; }).join(' ');
+    return words.map(w => w.root).join(' ');
   };
 
   return {
@@ -33,14 +32,14 @@ function testFactory() {
 
 const testPlayers = ['0', '1', '2'];
 
-function ExpectChangeState(round, from, to, testFn) {
+function ExpectStateChange(round, from, to, testFn) {
   expect(round.state()).to.eq(from);
   testFn();
   expect(round.state()).to.eq(to);
 }
 
 function ExpectSameState(round, state, testFn) {
-  ExpectChangeState(round, state, state, testFn);
+  ExpectStateChange(round, state, state, testFn);
 }
 
 describe('Psychobabble Round', function() {
@@ -62,9 +61,14 @@ describe('Psychobabble Round', function() {
     it('should transition the state to question building', function() {
       var round = TestRound(testPlayers);
 
-      ExpectChangeState(round, Round.STATE.UNSTARTED, Round.STATE.BUILD_QUESTION, function() {
-        round.start();
-      });
+      ExpectStateChange(
+        round,
+        Round.STATE.UNSTARTED,
+        Round.STATE.BUILD_QUESTION,
+        function() {
+          round.start();
+        }
+      );
     });
   });
 
@@ -126,7 +130,7 @@ describe('Psychobabble Round', function() {
     it('should return undefined if the round has not started yet', function() {
       var round = TestRound(testPlayers);
 
-      var sentence = round.sentence([{ root: 'abc', id: 123}]);
+      var sentence = round.sentence([{ root: 'abc', id: 123 }]);
 
       expect(round.state()).to.eq(Round.STATE.UNSTARTED);
       expect(sentence).to.be.undefined;
@@ -139,11 +143,16 @@ describe('Psychobabble Round', function() {
       round.start();
       var words = round.words();
 
-      ExpectChangeState(round, Round.STATE.BUILD_QUESTION, Round.STATE.BUILD_QUESTION, function() {
-        var submitted = round.submitSentence('0', words);
+      ExpectStateChange(
+        round,
+        Round.STATE.BUILD_QUESTION,
+        Round.STATE.BUILD_QUESTION,
+        function() {
+          var submitted = round.submitSentence('0', words);
 
-        expect(submitted).to.be.true;
-      });
+          expect(submitted).to.be.true;
+        }
+      );
     });
 
     it('should return false if another sentence was submitted', function() {
@@ -190,11 +199,16 @@ describe('Psychobabble Round', function() {
       round.start();
       var words = round.words();
 
-      ExpectChangeState(round, Round.STATE.BUILD_QUESTION, Round.STATE.VOTING, function() {
-        round.submitSentence('0', words);
-        round.submitSentence('1', words);
-        round.submitSentence('2', words);
-      });
+      ExpectStateChange(
+        round,
+        Round.STATE.BUILD_QUESTION,
+        Round.STATE.VOTING,
+        function() {
+          round.submitSentence('0', words);
+          round.submitSentence('1', words);
+          round.submitSentence('2', words);
+        }
+      );
     });
   });
 
@@ -247,11 +261,16 @@ describe('Psychobabble Round', function() {
       round.submitSentence('1', words);
       round.submitSentence('2', words);
 
-      ExpectChangeState(round, Round.STATE.VOTING, Round.STATE.ENDED, function() {
-        round.vote('0', '1');
-        round.vote('1', '1');
-        round.vote('2', '1');
-      });
+      ExpectStateChange(
+        round,
+        Round.STATE.VOTING,
+        Round.STATE.ENDED,
+        function() {
+          round.vote('0', '1');
+          round.vote('1', '1');
+          round.vote('2', '1');
+        }
+      );
     });
   });
 
