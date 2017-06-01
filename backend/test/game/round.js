@@ -1,8 +1,19 @@
+'use strict';
+
 var expect = require('chai').expect;
 var Round = require('../../game/round');
 
 function TestRound(players) {
   return Round(testFactory(), players);
+}
+
+function TestInvalidRound(players) {
+  var factory = testFactory();
+  factory.valid = function() {
+    return false;
+  };
+
+  return Round(factory, players);
 }
 
 function testFactory() {
@@ -24,9 +35,14 @@ function testFactory() {
     return words.map(w => w.root).join(' ');
   };
 
+  var valid = function() {
+    return true;
+  };
+
   return {
     generator: generator,
     builder: builder,
+    valid: valid,
   };
 }
 
@@ -108,21 +124,11 @@ describe('Psychobabble Round', function() {
       expect(sentence).to.eq('the quick brown fox jumps over the lazy');
     });
 
-    it('should return undefined if words are not from the original list', function() {
-      var round = TestRound(testPlayers);
+    it('should return undefined if the input is not valid', function() {
+      var round = TestInvalidRound(testPlayers);
       round.start();
 
       var sentence = round.sentence([{ root: 'abc', id: 123 }]);
-
-      expect(sentence).to.be.undefined;
-    });
-
-    it('should return undefined if there are repeated words', function() {
-      var round = TestRound(testPlayers);
-      round.start();
-      var words = round.words();
-
-      var sentence = round.sentence([words[0], words[0]]);
 
       expect(sentence).to.be.undefined;
     });
@@ -171,24 +177,12 @@ describe('Psychobabble Round', function() {
       });
     });
 
-    it('should return false if sentence contains not unlisted words', function() {
-      var round = TestRound(testPlayers);
+    it('should return false if sentence is not valid', function() {
+      var round = TestInvalidRound(testPlayers);
       round.start();
 
       ExpectSameState(round, Round.STATE.BUILD_QUESTION, function() {
         var submitted = round.submitSentence('0', [{ root: 'abc', id: 123 }]);
-
-        expect(submitted).to.be.false;
-      });
-    });
-
-    it('should return false if sentence contains repeated words', function() {
-      var round = TestRound(testPlayers);
-      round.start();
-      var words = round.words();
-
-      ExpectSameState(round, Round.STATE.BUILD_QUESTION, function() {
-        var submitted = round.submitSentence('0', [words[0], words[0]]);
 
         expect(submitted).to.be.false;
       });

@@ -24,9 +24,33 @@ function testFactory() {
     return words.map(w => w.root).join(' ');
   };
 
+  var valid = function(words, inputWords) {
+    return !hasDuplicate(inputWords) && wordsAllowed(words, inputWords);
+  };
+
+  var wordsAllowed = function(words, inputWords) {
+    inputWords = new Set(inputWords.map(w => w.id));
+    var roundWords = new Set(words.map(w => w.id));
+
+    for (let w of inputWords) {
+      if (!roundWords.has(w)) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  var hasDuplicate = function(inputWords) {
+    var size = inputWords.length;
+    var setSize = new Set(inputWords.map(w => w.id)).size;
+
+    return size !== setSize;
+  };
+
   return {
     generator: generator,
     builder: builder,
+    valid: valid,
   };
 }
 
