@@ -1,18 +1,17 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a href="#" class="navbar-brand">Psychobabble</a>
-    </div>   
+      <a class="navbar-brand">Psychobabble: Reborn</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a [routerLink]="['/']">Home</a>
+      </li>
+      <li routerLinkActive="active">
+        <a [routerLink]="['/play']">Play</a>
+      </li>
+    </ul>
   </div>
 </nav>
-<div class="container">
-  <div class="row">
-    <div class="col-xs-12">
-      <h1>
-        Coming Soon!
-      </h1>
-      <h1><small>no, really!</small></h1>
-    </div>
-  </div>
-</div>
+
 <router-outlet></router-outlet>
