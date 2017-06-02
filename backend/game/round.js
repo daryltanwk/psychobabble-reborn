@@ -15,32 +15,14 @@ function Round(factory, players) {
   var _votes = {};
   var _generator = factory.generator;
   var _builder = factory.builder;
+  var _valid = factory.valid;
 
   var changeState = function(newState) {
     _state = newState;
   };
 
-  var wordsAllowed = function(inputWords) {
-    inputWords = new Set(inputWords.map((w) => w.id));
-    var roundWords = new Set(_words.map((w) => w.id));
-
-    for (let w of inputWords) {
-      if (!roundWords.has(w)) {
-        return false;
-      }
-    }
-    return true;
-  };
-
-  var hasDuplicate = function(inputWords) {
-    var size = inputWords.length;
-    var setSize = (new Set(inputWords.map((w) => w.id))).size;
-
-    return size !== setSize;
-  };
-
   var playerExist = function(id) {
-    var player = _players.find(function(p) { return p === id; });
+    var player = _players.find(p => p === id);
     return player !== undefined;
   };
 
@@ -56,8 +38,7 @@ function Round(factory, players) {
 
   var sentence = function(inputWords) {
     if (_state !== STATE.BUILD_QUESTION) return;
-    if (!wordsAllowed(inputWords)) return;
-    if (hasDuplicate(inputWords)) return;
+    if (!_valid(_words, inputWords)) return;
 
     return _builder(inputWords);
   };
@@ -124,8 +105,12 @@ function Round(factory, players) {
     vote: vote,
     results: results,
     submitSentence: submitSentence,
-    players: function() { return _players.slice(); },
-    state: function() { return _state; },
+    players: () => {
+      return _players.slice();
+    },
+    state: () => {
+      return _state;
+    },
   };
 }
 
