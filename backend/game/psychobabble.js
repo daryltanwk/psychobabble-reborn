@@ -1,10 +1,11 @@
 'use strict';
 
-function Psychobabble(generator) {
+function Psychobabble(wordBank) {
   return {
     builder: builder,
     generator: generator,
     valid: valid,
+    wordBank: wordBank,
   };
 }
 
@@ -36,6 +37,30 @@ function builder(words) {
 
   words = words.slice();
   return build(words, [], words.shift());
+}
+
+function generator() {
+  var wordCount = {
+    noun: 5,
+    verb: 2,
+    adjective: 3,
+    modifier: 3,
+    determiner: 2,
+    preposition: 3,
+    conjunction: 2,
+  };
+
+  var words = [];
+  for (var type in wordCount) {
+    var count = wordCount[type];
+    words = words.concat(this.wordBank[type](count));
+  }
+
+  words.map(function(word, i) {
+    word.id = i;
+  });
+
+  return words;
 }
 
 function valid(words, inputWords) {
