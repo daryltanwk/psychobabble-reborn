@@ -7,14 +7,17 @@
   "author": "Daryl Tan <daryltanwk@gmail.com>",
   "license": "LGPL-3.0",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec --recursive",
+    "test": "./node_modules/.bin/nyc ./node_modules/.bin/mocha --reporter spec --recursive",
     "lint": "./node_modules/.bin/eslint .",
-    "prettier": "./node_modules/.bin/prettier --single-quote --trailing-comma es5 --write '{game,test}/**/*.js' './*.js'"
+    "prettier": "./node_modules/.bin/prettier --single-quote --trailing-comma es5 --write '{game,test}/**/*.js' './*.js'",
+    "coverage": "./node_modules/.bin/nyc report --reporter=text-lcov > coverage.lcov && ./node_modules/.bin/codecov"
   },
   "devDependencies": {
     "chai": "^4.0.0",
+    "codecov": "^2.2.0",
     "eslint": "^3.19.0",
     "mocha": "^3.4.2",
+    "nyc": "^11.0.2",
     "prettier": "^1.3.1",
     "readline-sync": "^1.4.7"
   }
