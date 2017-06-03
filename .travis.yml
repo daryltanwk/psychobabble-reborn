@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - "8"
+cache:
+  - backend/node_modules
+install:
+  - cd backend && npm install && cd ..
+script:
+  - cd backend && npm run test && cd ..
+after_success:
+  - cd backend && npm run coverage && cd ..
+notifications:
+  email: false
