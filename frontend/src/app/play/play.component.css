@@ -1,0 +1,15 @@
+.max-height {
+    height: 500px;
+    overflow:scroll;
+    word-wrap: break-word;
+}
+
+#table {
+    display: table;
+}
+
+#cell {
+    display:table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
