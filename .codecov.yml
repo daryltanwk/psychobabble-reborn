@@ -3,3 +3,7 @@ flags:
   backend:
     paths:
       - backend/
+coverage:
+  project:
+    default:
+      threshold: 10
