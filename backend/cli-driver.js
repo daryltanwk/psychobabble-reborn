@@ -4,55 +4,8 @@
 
 var rlsync = require('readline-sync');
 var Round = require('./game/round');
-
-function testFactory() {
-  var generator = function() {
-    return [
-      { id: 1, root: 'the' },
-      { id: 2, root: 'quick' },
-      { id: 3, root: 'brown' },
-      { id: 4, root: 'fox' },
-      { id: 5, root: 'jumps' },
-      { id: 6, root: 'over' },
-      { id: 7, root: 'the' },
-      { id: 8, root: 'lazy' },
-      { id: 9, root: 'dog' },
-    ];
-  };
-
-  var builder = function(words) {
-    return words.map(w => w.root).join(' ');
-  };
-
-  var valid = function(words, inputWords) {
-    return !hasDuplicate(inputWords) && wordsAllowed(words, inputWords);
-  };
-
-  var wordsAllowed = function(words, inputWords) {
-    inputWords = new Set(inputWords.map(w => w.id));
-    var roundWords = new Set(words.map(w => w.id));
-
-    for (let w of inputWords) {
-      if (!roundWords.has(w)) {
-        return false;
-      }
-    }
-    return true;
-  };
-
-  var hasDuplicate = function(inputWords) {
-    var size = inputWords.length;
-    var setSize = new Set(inputWords.map(w => w.id)).size;
-
-    return size !== setSize;
-  };
-
-  return {
-    generator: generator,
-    builder: builder,
-    valid: valid,
-  };
-}
+var Psychobabble = require('./game/psychobabble');
+var WordBank = require('./game/wordbank').Local;
 
 function printState(round) {
   var states = {};
@@ -68,7 +21,7 @@ function printState(round) {
 }
 
 var players = ['0', '1', '2'];
-var round = Round(testFactory(), players);
+var round = Round(Psychobabble(WordBank), players);
 StartRound(round);
 BuildQuestion(round);
 Vote(round);
@@ -89,7 +42,7 @@ function BuildQuestion(round) {
     wordList[word.id] = word;
   });
 
-  console.log(words);
+  console.log(words.map(({ id, root }) => ({ id, root })));
   console.log('Input by putting id seperated by space');
   console.log('');
 

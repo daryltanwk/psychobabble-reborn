@@ -13,9 +13,6 @@ function Round(factory, players) {
   var _words = [];
   var _sentences = {};
   var _votes = {};
-  var _generator = factory.generator;
-  var _builder = factory.builder;
-  var _valid = factory.valid;
 
   var changeState = function(newState) {
     _state = newState;
@@ -29,7 +26,7 @@ function Round(factory, players) {
   var start = function() {
     if (_state !== STATE.UNSTARTED) return;
 
-    _words = _generator();
+    _words = factory.generator();
     _sentences = {};
     _votes = {};
 
@@ -38,9 +35,9 @@ function Round(factory, players) {
 
   var sentence = function(inputWords) {
     if (_state !== STATE.BUILD_QUESTION) return;
-    if (!_valid(_words, inputWords)) return;
+    if (!factory.valid(_words, inputWords)) return;
 
-    return _builder(inputWords);
+    return factory.builder(inputWords);
   };
 
   var submitSentence = function(id, inputWords) {
