@@ -27,7 +27,7 @@ export class PlayComponent implements OnInit {
   }
 
   lobbySelected() {
-    return (this.selectedLobby)
+    return (this.selectedLobby);
   }
 
   shouldHighlight(id: string) {
