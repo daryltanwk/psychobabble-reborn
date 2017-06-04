@@ -23,7 +23,7 @@
     "bootswatch": "^3.3.7",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
-    "ngx-bootstrap": "^1.6.6",
+    "ngx-bootstrap": "^1.7.1",
     "rxjs": "^5.1.0",
     "zone.js": "^0.8.4"
   },
@@ -31,7 +31,7 @@
     "@angular/cli": "^1.1.0",
     "@angular/compiler-cli": "^4.0.0",
     "@types/jasmine": "2.5.38",
-    "@types/node": "~6.0.60",
+    "@types/node": "^6.0.77",
     "codelyzer": "~2.0.0",
     "jasmine-core": "~2.5.2",
     "jasmine-spec-reporter": "~3.2.0",
