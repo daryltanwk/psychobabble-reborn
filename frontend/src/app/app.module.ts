@@ -7,12 +7,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { PlayComponent } from './play/play.component';
+import { LobbyComponent } from './play/lobby/lobby.component';
+import { PlayersService } from './services/players.service';
+import { LobbyService } from './services/lobby.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     PlayComponent,
+    LobbyComponent,
   ],
   imports: [
     BrowserModule,
@@ -20,7 +24,7 @@ import { PlayComponent } from './play/play.component';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [PlayersService, LobbyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
