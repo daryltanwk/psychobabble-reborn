@@ -27,19 +27,11 @@ export class PlayComponent implements OnInit {
   }
 
   lobbySelected() {
-    if (!this.selectedLobby) {
-      return false;
-    } else {
-      return true;
-    }
+    return (this.selectedLobby)
   }
 
   shouldHighlight(id: string) {
-    if (typeof this.selectedLobby !== 'undefined' && id === this.selectedLobby.id) {
-      return true;
-    } else {
-      return false;
-    }
+    return (typeof this.selectedLobby !== 'undefined' && id === this.selectedLobby.id);
   }
 
   displayDetails(lobbyData: { id: string, name: string }) {

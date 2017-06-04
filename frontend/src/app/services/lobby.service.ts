@@ -44,11 +44,7 @@ export class LobbyService {
   removeLobby(id) {
     // insert actual backend call here
     const index = this.lobbies.findIndex((lobby) => {
-      if (lobby.lobbyId() === id) {
-        return true;
-      } else {
-        return false;
-      }
+      return (lobby.lobbyId() === id);
     });
 
     if (typeof index !== 'undefined') {

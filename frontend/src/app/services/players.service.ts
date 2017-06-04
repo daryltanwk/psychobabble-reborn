@@ -41,11 +41,7 @@ export class PlayersService {
   removePlayer(playerId: string) {
     // insert actual backend call here
     const index = this.players.findIndex((player) => {
-      if (player.playerId() === playerId) {
-        return true;
-      } else {
-        return false;
-      }
+      return (player.playerId() === playerId);
     });
 
     this.players.splice(index, 1);
