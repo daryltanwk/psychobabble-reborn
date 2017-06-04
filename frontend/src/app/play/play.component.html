@@ -44,4 +44,63 @@
       </div>
     </ng-template>
 
+    <div class="row">
+      <div class="col-xs-6">
+        <div class="row">
+          <div class="col-xs-12">
+            <h2>Lobby Functions Test</h2>
+            <!--stuff here-->
+            <label for="lobbyId">Lobby ID</label>
+            <input id="lobbyId" [(ngModel)]="formLobbyId" type="text">
+            <label for="lobbyName">Lobby Name</label>
+            <input id="lobbyName" [(ngModel)]="formLobbyName" type="text"><br>
+            <button (click)="addLobby()" class="btn btn-success">add lobby</button>
+            <button (click)="removeLobby()" class="btn btn-danger">remove lobby</button>
+            <hr>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <h3>Lobby Info at a glance</h3>
+            <!--INFO HERE-->
+            <div *ngFor="let lobby of lobbies" class="row">
+              <div class="col-xs-12">
+                <p>{{lobby.id}} ==> {{lobby.name}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <div class="row">
+          <div class="col-xs-12">
+            <h2>Player Functions Test</h2>
+            <!--stuff here-->
+            <label for="playerId">Player ID</label>
+            <input id="playerId" [(ngModel)]="formPlayerId" type="text">
+            <label for="playerName">Player Name</label>
+            <input id="playerName" [(ngModel)]="formPlayerName" type="text"><br>
+            <button (click)="addPlayer()" class="btn btn-success">add player</button>
+            <button (click)="removePlayer()" class="btn btn-danger">remove player</button>
+            <hr>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <h3>Players Info at a glance</h3>
+            <!--INFO HERE-->
+            <div *ngFor="let player of players" class="row">
+              <div class="col-xs-12">
+                <p>{{player.id}} ==> {{player.name}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+
+    </div>
+
   </div>

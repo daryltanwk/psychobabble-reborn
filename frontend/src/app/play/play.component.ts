@@ -11,19 +11,25 @@ import { LobbyService } from '../services/lobby.service';
 })
 export class PlayComponent implements OnInit {
   lobbies: Array<Lobby>;
+  players: Array<Player>;
   selectedLobby: { id: string, name: string };
 
   placeholder = '<best-game>';
   placeholder2 = '</best-game>';
   count: number;
 
-  mockName = 'place';
-  mockId = 'holder';
+  // temporary variables
+  formLobbyId: string;
+  formLobbyName: string;
+  formPlayerId: string;
+  formPlayerName: string;
+
 
   constructor(private playersService: PlayersService, private lobbyService: LobbyService) { }
 
   ngOnInit() {
     this.lobbies = this.lobbyService.getLobbies();
+    this.players = this.playersService.getPlayers();
   }
 
   lobbySelected() {
@@ -40,6 +46,19 @@ export class PlayComponent implements OnInit {
     } else {
       this.selectedLobby = lobbyData;
     }
+  }
+
+  addLobby() {
+    this.lobbyService.createLobby(this.formLobbyName);
+  }
+  removeLobby() {
+    this.lobbyService.removeLobby(this.formLobbyId);
+  }
+  addPlayer() {
+    this.playersService.addPlayer(this.formPlayerName);
+  }
+  removePlayer() {
+    this.playersService.removePlayer(this.formPlayerId);
   }
 
 }

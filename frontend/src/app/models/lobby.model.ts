@@ -23,4 +23,13 @@ export class Lobby {
     lobbyName() {
         return this.name;
     }
+
+    // for testing only. the below code will not be needed because the backend should do the actual adding
+    addPlayer(player:Player) { 
+        this.players.push(player);
+    }
+    removePlayer(player: Player) {
+        const pIndex = this.players.indexOf(player);
+        this.players.splice(pIndex, 1);
+    }
 }

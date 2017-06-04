@@ -1,3 +1,4 @@
+import { Player } from './../models/player.model';
 import { Injectable } from '@angular/core';
 import { Lobby } from '../models/lobby.model';
 import { PlayersService } from '../services/players.service';
@@ -54,9 +55,25 @@ export class LobbyService {
 
   playerJoins(playerId: string, lobbyId: string) {
     // insert actual backend call
+    const player:Player = this.playerService.getPlayers().find((player) => {
+      return player.playerId() === playerId;
+    });
+    const lobby: Lobby = this.lobbies.find((lobby) => {
+      return lobby.lobbyId() === lobbyId;
+    });
 
+    lobby.addPlayer(player);
   }
+
   playerLeaves(playerId: string, lobbyId: string) {
     // insert actual backend call
+    const player:Player = this.playerService.getPlayers().find((player) => {
+      return player.playerId() === playerId;
+    });
+    const lobby: Lobby = this.lobbies.find((lobby) => {
+      return lobby.lobbyId() === lobbyId;
+    });
+
+    lobby.removePlayer(player);
   }
 }
