@@ -39,7 +39,7 @@ export class LobbyService {
 
   createLobby(name: string) {
     // insert actual backend call here
-    this.lobbies.push(new Lobby(this.lobbies.length.toString(), name));
+    this.lobbies.push(new Lobby((this.lobbies.length+1).toString(), name));
   }
 
   removeLobby(id) {
@@ -55,7 +55,7 @@ export class LobbyService {
 
   playerJoins(playerId: string, lobbyId: string) {
     // insert actual backend call
-    const player:Player = this.playerService.getPlayers().find((player) => {
+    const player: Player = this.playerService.getPlayers().find((player) => {
       return player.playerId() === playerId;
     });
     const lobby: Lobby = this.lobbies.find((lobby) => {
@@ -67,7 +67,7 @@ export class LobbyService {
 
   playerLeaves(playerId: string, lobbyId: string) {
     // insert actual backend call
-    const player:Player = this.playerService.getPlayers().find((player) => {
+    const player: Player = this.playerService.getPlayers().find((player) => {
       return player.playerId() === playerId;
     });
     const lobby: Lobby = this.lobbies.find((lobby) => {
@@ -75,5 +75,14 @@ export class LobbyService {
     });
 
     lobby.removePlayer(player);
+  }
+
+  playerQuits(playerId: string) {
+    const player: Player = this.playerService.getPlayers().find((player) => {
+      return player.playerId() === playerId;
+    });
+    this.lobbies.forEach((lobby) => {
+      lobby.removePlayer(player);
+    });
   }
 }

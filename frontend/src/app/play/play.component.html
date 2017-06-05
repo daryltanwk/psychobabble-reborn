@@ -15,12 +15,12 @@
       <div class="row">
         <!--lobby-component-->
         <div class="col-xs-12" *ngFor="let lobby of lobbies">
-          <app-lobby (selectedLobby)="displayDetails($event)" [highlight]="shouldHighlight(lobby.id)" [id]="lobby.id" [name]="lobby.name"></app-lobby>
+          <app-lobby (click)="displayDetails(lobby)" [highlight]="shouldHighlight(lobby.id)" [lobby]="lobby"></app-lobby>
         </div>
       </div>
     </div>
 
-    <div *ngIf="lobbySelected();else showDetails" class="col-xs-6 parent">
+    <div *ngIf="lobbySelected();else showDetails" class="col-xs-6">
       <div class="max-height well">
         <div class="row">
           <div class="col-xs-12">
@@ -30,14 +30,16 @@
         <hr>
         <div class="row">
           <div class="col-xs-12">
-            <p>some information will be displayed here. maybe.</p>
+            <ul>
+              <li *ngFor="let player of selectedLobby.playerList()">{{player.id}} ==> {{player.name}}</li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
 
     <ng-template #showDetails>
-      <div id="table" class="col-xs-6 parent">
+      <div id="table" class="col-xs-6">
         <div id="cell" class="well max-height">
           <h4>Select a Lobby to view details</h4>
         </div>
@@ -57,15 +59,26 @@
             <button (click)="addLobby()" class="btn btn-success">add lobby</button>
             <button (click)="removeLobby()" class="btn btn-danger">remove lobby</button>
             <hr>
+            <label for="lobbyPlayerId">Player ID</label>
+            <input [(ngModel)]="formLobbyPlayerId" type="text" id="lobbyPlayerId"><br>
+            <button (click)="playerJoinsLobby()" class="btn btn-warning">Add Player to Lobby</button>
+            <button (click)="playerLeavesLobby()" class="btn btn-info">Remove Player from Lobby</button>
           </div>
         </div>
         <div class="row">
           <div class="col-xs-12">
             <h3>Lobby Info at a glance</h3>
             <!--INFO HERE-->
-            <div *ngFor="let lobby of lobbies" class="row">
+            <div class="row">
               <div class="col-xs-12">
-                <p>{{lobby.id}} ==> {{lobby.name}}</p>
+                <ul>
+                  <li *ngFor="let lobby of lobbies">
+                    {{lobby.id}} ==> {{lobby.name}}
+                    <ul *ngFor="let player of lobby.playerList()">
+                      <li>{{player.id}} ==> {{player.name}}</li>
+                    </ul>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -98,9 +111,5 @@
         </div>
       </div>
     </div>
-
-    <div class="row">
-
-    </div>
-
   </div>
+</div>

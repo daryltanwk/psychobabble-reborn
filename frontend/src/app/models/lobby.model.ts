@@ -6,7 +6,9 @@ export class Lobby {
     constructor(
         private id: string,
         private name: string
-    ) { }
+    ) {
+        this.players = [];
+    }
 
     playerCount() {
         return this.players.length;
@@ -25,11 +27,15 @@ export class Lobby {
     }
 
     // for testing only. the below code will not be needed because the backend should do the actual adding
-    addPlayer(player:Player) { 
+    addPlayer(player: Player) {
         this.players.push(player);
     }
     removePlayer(player: Player) {
-        const pIndex = this.players.indexOf(player);
+        const pIndex = this.players.findIndex((currentPlayer) => {
+            console.log(currentPlayer);
+            console.log(player);
+            return player.playerId() === currentPlayer.playerId();
+        });
         this.players.splice(pIndex, 1);
     }
 }

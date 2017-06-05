@@ -34,7 +34,7 @@ export class PlayersService {
 
   addPlayer(playerName: string) {
     // insert actual backend call here
-    const player = new Player(this.players.length.toString(), playerName);
+    const player = new Player((this.players.length+1).toString(), playerName);
     this.players.push(player);
   }
 

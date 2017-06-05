@@ -12,17 +12,16 @@ import { LobbyService } from '../services/lobby.service';
 export class PlayComponent implements OnInit {
   lobbies: Array<Lobby>;
   players: Array<Player>;
-  selectedLobby: { id: string, name: string };
+  selectedLobby: Lobby;
 
-  placeholder = '<best-game>';
-  placeholder2 = '</best-game>';
-  count: number;
+
 
   // temporary variables
   formLobbyId: string;
   formLobbyName: string;
   formPlayerId: string;
   formPlayerName: string;
+  formLobbyPlayerId: string;
 
 
   constructor(private playersService: PlayersService, private lobbyService: LobbyService) { }
@@ -37,11 +36,11 @@ export class PlayComponent implements OnInit {
   }
 
   shouldHighlight(id: string) {
-    return (typeof this.selectedLobby !== 'undefined' && id === this.selectedLobby.id);
+    return (typeof this.selectedLobby !== 'undefined' && id === this.selectedLobby.lobbyId());
   }
 
-  displayDetails(lobbyData: { id: string, name: string }) {
-    if (typeof this.selectedLobby !== 'undefined' && this.selectedLobby.id === lobbyData.id) {
+  displayDetails(lobbyData: Lobby) {
+    if (typeof this.selectedLobby !== 'undefined' && this.selectedLobby.lobbyId() === lobbyData.lobbyId()) {
       this.selectedLobby = undefined;
     } else {
       this.selectedLobby = lobbyData;
@@ -58,7 +57,14 @@ export class PlayComponent implements OnInit {
     this.playersService.addPlayer(this.formPlayerName);
   }
   removePlayer() {
+    this.lobbyService.playerQuits(this.formPlayerId);
     this.playersService.removePlayer(this.formPlayerId);
+  }
+  playerJoinsLobby() {
+    this.lobbyService.playerJoins(this.formLobbyPlayerId, this.formLobbyId);
+  }
+  playerLeavesLobby() {
+    this.lobbyService.playerLeaves(this.formLobbyPlayerId, this.formLobbyId);
   }
 
 }
