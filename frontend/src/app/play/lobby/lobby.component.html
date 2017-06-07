@@ -4,5 +4,10 @@
   </div>
   <div class="panel-body">
     {{lobby.lobbyName()}}
+    <ul>
+      <li *ngFor="let player of lobby.playerList()">
+        {{player.playerId()}} ==> {{player.playerName()}}
+      </li>
+    </ul>
   </div>
 </div>

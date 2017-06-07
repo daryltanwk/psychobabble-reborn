@@ -18,24 +18,24 @@ export class DatastoreService {
     // Initialize the datastore with some values to feed to services
 
     this.playersData = [
-      new Player('1', 'player-one'),
-      new Player('2', 'player-two'),
-      new Player('3', 'player-three'),
-      new Player('4', 'player-four'),
-      new Player('5', 'player-five'),
-      new Player('6', 'player-six'),
+      new Player(this.makeId(), 'player-one'),
+      new Player(this.makeId(), 'player-two'),
+      new Player(this.makeId(), 'player-three'),
+      new Player(this.makeId(), 'player-four'),
+      new Player(this.makeId(), 'player-five'),
+      new Player(this.makeId(), 'player-six'),
     ];
 
     this.lobbiesData = [
-      new Lobby('1', 'lobby-one'),
-      new Lobby('2', 'lobby-two'),
-      new Lobby('3', 'lobby-three'),
-      new Lobby('4', 'lobby-four'),
-      new Lobby('5', 'lobby-five'),
-      new Lobby('6', 'lobby-six'),
-      new Lobby('7', 'lobby-seven'),
-      new Lobby('8', 'lobby-eight'),
-      new Lobby('9', 'lobby-nine'),
+      new Lobby(this.makeId(), 'lobby-one'),
+      new Lobby(this.makeId(), 'lobby-two'),
+      new Lobby(this.makeId(), 'lobby-three'),
+      new Lobby(this.makeId(), 'lobby-four'),
+      new Lobby(this.makeId(), 'lobby-five'),
+      new Lobby(this.makeId(), 'lobby-six'),
+      new Lobby(this.makeId(), 'lobby-seven'),
+      new Lobby(this.makeId(), 'lobby-eight'),
+      new Lobby(this.makeId(), 'lobby-nine'),
     ];
     this.updateLobbies();
     this.updatePlayers();
@@ -57,8 +57,8 @@ export class DatastoreService {
   }
 
   createLobby(name: string) {
-    this.lobbiesData.push(new Lobby((this.lobbiesData.length + 1).toString(), name));
-    // this.updateLobbies();
+    this.lobbiesData.push(new Lobby(this.makeId(), name));
+    this.updateLobbies();
   }
 
   removeLobby(id) {
@@ -110,7 +110,7 @@ export class DatastoreService {
 
   addPlayer(playerName: string) {
     // insert actual backend call here
-    const player = new Player((this.playersData.length + 1).toString(), playerName);
+    const player = new Player(this.makeId(), playerName);
     this.playersData.push(player);
     this.updatePlayers();
   }
@@ -123,6 +123,10 @@ export class DatastoreService {
 
     this.playersData.splice(index, 1);
     this.updatePlayers();
+  }
+
+  makeId() {
+    return Math.random().toString(36).substr(2, 5);
   }
 
 }

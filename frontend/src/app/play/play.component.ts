@@ -1,7 +1,5 @@
-import { Component, OnInit, AfterContentChecked } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PlayersService } from '../services/players.service';
-import { Player } from '../models/player.model';
-import { Lobby } from '../models/lobby.model';
 import { LobbyService } from '../services/lobby.service';
 
 @Component({
@@ -9,10 +7,8 @@ import { LobbyService } from '../services/lobby.service';
   templateUrl: './play.component.html',
   styleUrls: ['./play.component.css']
 })
-export class PlayComponent implements OnInit, AfterContentChecked {
-  lobbies: Array<Lobby>;
-  players: Array<Player>;
-  selectedLobby: Lobby;
+export class PlayComponent implements OnInit {
+  selectedLobbyId: string;
 
   // temporary variables
   formLobbyId: string;
@@ -21,30 +17,23 @@ export class PlayComponent implements OnInit, AfterContentChecked {
   formPlayerName: string;
   formLobbyPlayerId: string;
 
+  ngOnInit() { }
 
   constructor(private playersService: PlayersService, private lobbyService: LobbyService) { }
 
-  ngOnInit() {
-  }
-
-  ngAfterContentChecked() {
-    this.lobbies = this.lobbyService.getLobbies();
-    this.players = this.playersService.getPlayers();
-  }
-
   lobbySelected() {
-    return (this.selectedLobby);
+    return (this.selectedLobbyId);
   }
 
   shouldHighlight(id: string) {
-    return (typeof this.selectedLobby !== 'undefined' && id === this.selectedLobby.lobbyId());
+    return (typeof this.selectedLobbyId !== 'undefined' && id === this.selectedLobbyId);
   }
 
-  displayDetails(lobbyData: Lobby) {
-    if (typeof this.selectedLobby !== 'undefined' && this.selectedLobby.lobbyId() === lobbyData.lobbyId()) {
-      this.selectedLobby = undefined;
+  displayDetails(lobbyId: string) {
+    if (typeof this.selectedLobbyId !== 'undefined' && this.selectedLobbyId === lobbyId) {
+      this.selectedLobbyId = undefined;
     } else {
-      this.selectedLobby = lobbyData;
+      this.selectedLobbyId = lobbyId;
     }
   }
 
