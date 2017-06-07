@@ -32,8 +32,6 @@ export class Lobby {
     }
     removePlayer(player: Player) {
         const pIndex = this.players.findIndex((currentPlayer) => {
-            console.log(currentPlayer);
-            console.log(player);
             return player.playerId() === currentPlayer.playerId();
         });
         this.players.splice(pIndex, 1);

@@ -52,17 +52,17 @@
           <div class="col-xs-12">
             <h2>Lobby Functions Test</h2>
             <!--stuff here-->
-            <label for="lobbyId">Lobby ID</label>
-            <input id="lobbyId" [(ngModel)]="formLobbyId" type="text">
             <label for="lobbyName">Lobby Name</label>
             <input id="lobbyName" [(ngModel)]="formLobbyName" type="text"><br>
             <button (click)="addLobby()" class="btn btn-success">add lobby</button>
-            <button (click)="removeLobby()" class="btn btn-danger">remove lobby</button>
             <hr>
             <label for="lobbyPlayerId">Player ID</label>
-            <input [(ngModel)]="formLobbyPlayerId" type="text" id="lobbyPlayerId"><br>
+            <input [(ngModel)]="formLobbyPlayerId" type="text" id="lobbyPlayerId">
+            <label for="lobbyId">Lobby ID</label>
+            <input id="lobbyId" [(ngModel)]="formLobbyId" type="text"><br>
             <button (click)="playerJoinsLobby()" class="btn btn-warning">Add Player to Lobby</button>
             <button (click)="playerLeavesLobby()" class="btn btn-info">Remove Player from Lobby</button>
+            <button (click)="removeLobby()" class="btn btn-danger">remove lobby</button>
           </div>
         </div>
         <div class="row">
@@ -89,13 +89,13 @@
           <div class="col-xs-12">
             <h2>Player Functions Test</h2>
             <!--stuff here-->
-            <label for="playerId">Player ID</label>
-            <input id="playerId" [(ngModel)]="formPlayerId" type="text">
             <label for="playerName">Player Name</label>
             <input id="playerName" [(ngModel)]="formPlayerName" type="text"><br>
-            <button (click)="addPlayer()" class="btn btn-success">add player</button>
-            <button (click)="removePlayer()" class="btn btn-danger">remove player</button>
+            <button (click)="addPlayer()" class="btn btn-success">add player</button><br>
             <hr>
+            <label for="playerId">Player ID</label>
+            <input id="playerId" [(ngModel)]="formPlayerId" type="text"><br>
+            <button (click)="removePlayer()" class="btn btn-danger">remove player</button>
           </div>
         </div>
         <div class="row">

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import { PlayersService } from '../services/players.service';
 import { Player } from '../models/player.model';
 import { Lobby } from '../models/lobby.model';
@@ -9,12 +9,10 @@ import { LobbyService } from '../services/lobby.service';
   templateUrl: './play.component.html',
   styleUrls: ['./play.component.css']
 })
-export class PlayComponent implements OnInit {
+export class PlayComponent implements OnInit, AfterContentChecked {
   lobbies: Array<Lobby>;
   players: Array<Player>;
   selectedLobby: Lobby;
-
-
 
   // temporary variables
   formLobbyId: string;
@@ -27,6 +25,9 @@ export class PlayComponent implements OnInit {
   constructor(private playersService: PlayersService, private lobbyService: LobbyService) { }
 
   ngOnInit() {
+  }
+
+  ngAfterContentChecked() {
     this.lobbies = this.lobbyService.getLobbies();
     this.players = this.playersService.getPlayers();
   }
@@ -57,7 +58,6 @@ export class PlayComponent implements OnInit {
     this.playersService.addPlayer(this.formPlayerName);
   }
   removePlayer() {
-    this.lobbyService.playerQuits(this.formPlayerId);
     this.playersService.removePlayer(this.formPlayerId);
   }
   playerJoinsLobby() {
