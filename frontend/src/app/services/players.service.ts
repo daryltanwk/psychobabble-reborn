@@ -22,18 +22,11 @@ export class PlayersService {
 
   addPlayer(playerName: string) {
     // insert actual backend call here
-    // const player = new Player((this.players.length + 1).toString(), playerName);
-    // this.players.push(player);
     this.datastoreService.addPlayer(playerName);
   }
 
   removePlayer(playerId: string) {
     // insert actual backend call here
-    // const index = this.players.findIndex((player) => {
-    //   return (player.playerId() === playerId);
-    // });
-
-    // this.players.splice(index, 1);
     this.datastoreService.playerQuits(playerId);
     this.datastoreService.removePlayer(playerId);
   }
