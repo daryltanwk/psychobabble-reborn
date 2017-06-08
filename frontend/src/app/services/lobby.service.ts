@@ -1,29 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Lobby } from '../models/lobby.model';
-import { PlayersService } from '../services/players.service';
+import { DatastoreService } from './datastore.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
 export class LobbyService {
   private lobbies: Array<Lobby>;
-  private mockLobbies = [
-    new Lobby('1', 'lobby-one'),
-    new Lobby('2', 'lobby-two'),
-    new Lobby('3', 'lobby-three'),
-    new Lobby('4', 'lobby-four'),
-    new Lobby('5', 'lobby-five'),
-    new Lobby('6', 'lobby-six'),
-    new Lobby('7', 'lobby-seven'),
-    new Lobby('8', 'lobby-eight'),
-    new Lobby('9', 'lobby-nine'),
-  ];
-
-  constructor(private playerService: PlayersService) {
-    this.populateLobbies();
-  }
-
-  populateLobbies() {
-    // insert actual backend call here
-    this.lobbies = this.mockLobbies;
+  private lobbySub: Subscription;
+  constructor(private datastoreService: DatastoreService) {
+    this.lobbySub = this.datastoreService.lobbyObs.subscribe((lobbyData: Lobby[]) => {
+      this.lobbies = lobbyData.slice(0);
+    });
   }
 
   getLobbies() {
@@ -38,25 +25,26 @@ export class LobbyService {
 
   createLobby(name: string) {
     // insert actual backend call here
-    this.lobbies.push(new Lobby(this.lobbies.length.toString(), name));
+    this.datastoreService.createLobby(name);
   }
 
   removeLobby(id) {
     // insert actual backend call here
-    const index = this.lobbies.findIndex((lobby) => {
-      return (lobby.lobbyId() === id);
-    });
-
-    if (typeof index !== 'undefined') {
-      this.lobbies.splice(index, 1);
-    }
+    this.datastoreService.removeLobby(id);
   }
 
   playerJoins(playerId: string, lobbyId: string) {
     // insert actual backend call
-
+    this.datastoreService.playerJoins(playerId, lobbyId);
   }
+
   playerLeaves(playerId: string, lobbyId: string) {
     // insert actual backend call
+    this.datastoreService.playerLeaves(playerId, lobbyId);
   }
+
+  playerQuits(playerId: string) {
+    this.datastoreService.playerQuits(playerId);
+  }
+
 }

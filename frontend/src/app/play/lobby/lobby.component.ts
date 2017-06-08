@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
-import { LobbyService } from '../../services/lobby.service';
+import { Lobby } from './../../models/lobby.model';
 
 @Component({
   selector: 'app-lobby',
@@ -8,12 +8,10 @@ import { LobbyService } from '../../services/lobby.service';
   styleUrls: ['./lobby.component.css']
 })
 export class LobbyComponent implements OnInit {
-  @Input() id: string;
-  @Input() name: string;
-  @Output() selectedLobby = new EventEmitter<{ id: string, name: string }>();
+  @Input() lobby: Lobby;
   @Input() highlight: false;
 
-  constructor(private lobbyService: LobbyService) { }
+  constructor() { }
 
   ngOnInit() {
   }
@@ -25,12 +23,4 @@ export class LobbyComponent implements OnInit {
       return 'panel-default';
     }
   }
-
-  selectLobby() {
-    this.selectedLobby.emit({
-      id: this.id,
-      name: this.name,
-    });
-  }
-
 }
