@@ -1,6 +1,16 @@
-.max-height {
-    height: 500px;
+.table-height {
+    height: 400px;
+    /*background-color: bisque;*/
     overflow:scroll;
+    word-wrap: break-word;
+}
+
+.chat-height {
+    background-color: yellowgreen;
+    height:250px;
+}
+
+.playerlist {
     word-wrap: break-word;
 }
 

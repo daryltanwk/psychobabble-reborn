@@ -16,11 +16,11 @@ export class LobbyComponent implements OnInit {
   ngOnInit() {
   }
 
-  panelType() {
+  isActive() {
     if (this.highlight) {
-      return 'panel-info';
+      return 'active';
     } else {
-      return 'panel-default';
+      return '';
     }
   }
 }

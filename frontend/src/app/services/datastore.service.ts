@@ -24,19 +24,44 @@ export class DatastoreService {
       new Player(this.makeId(), 'player-four'),
       new Player(this.makeId(), 'player-five'),
       new Player(this.makeId(), 'player-six'),
+      new Player(this.makeId(), 'player-seven'),
+      new Player(this.makeId(), 'player-eight'),
+      new Player(this.makeId(), 'player-nine'),
+      new Player(this.makeId(), 'player-ten'),
+      new Player(this.makeId(), 'player-eleven'),
+      new Player(this.makeId(), 'player-twelve'),
+      new Player(this.makeId(), 'player-thirteen'),
+      new Player(this.makeId(), 'player-fourteen'),
+      new Player(this.makeId(), 'player-fifteen'),
+      new Player(this.makeId(), 'player-sixteen'),
+      new Player(this.makeId(), 'player-seventeen'),
+      new Player(this.makeId(), 'player-eighteen'),
     ];
 
     this.lobbiesData = [
-      new Lobby(this.makeId(), 'lobby-one'),
-      new Lobby(this.makeId(), 'lobby-two'),
-      new Lobby(this.makeId(), 'lobby-three'),
-      new Lobby(this.makeId(), 'lobby-four'),
-      new Lobby(this.makeId(), 'lobby-five'),
-      new Lobby(this.makeId(), 'lobby-six'),
-      new Lobby(this.makeId(), 'lobby-seven'),
-      new Lobby(this.makeId(), 'lobby-eight'),
-      new Lobby(this.makeId(), 'lobby-nine'),
+      new Lobby(this.makeId(), 'fast game lets go'),
+      new Lobby(this.makeId(), 'blah blah lobby'),
+      new Lobby(this.makeId(), 'pizzpuzz'),
+      new Lobby(this.makeId(), 'the quick grey bunny'),
+      new Lobby(this.makeId(), 'no noobs.'),
+      new Lobby(this.makeId(), 'ready up or kik'),
+      new Lobby(this.makeId(), '5 round gogo'),
+      new Lobby(this.makeId(), 'a smart lobby name'),
+      new Lobby(this.makeId(), 'really? ok'),
     ];
+
+    _.forEach(this.playersData, (plyr) => {
+      plyr.setStatus(Math.ceil(Math.random() * 3));
+     });
+
+    _.forEach(this.lobbiesData, (lby) => {
+      const joiners = Math.ceil(Math.random() * 5);
+      for (let i = 0; i < joiners; i++) {
+        const joinerIndex = Math.floor(Math.random() * this.playersData.length);
+        this.playerJoins(this.playersData[joinerIndex].playerId(), lby.lobbyId());
+      }
+    });
+
     this.updateLobbies();
     this.updatePlayers();
   }
@@ -46,14 +71,14 @@ export class DatastoreService {
     setTimeout(() => {
       const result = _.cloneDeep(this.lobbiesData);
       this.lobbyObs.next(result);
-    }, 1500); // emulate latency
+    }, 1); // emulate latency
   }
 
   updatePlayers() {
     setTimeout(() => {
       const result = _.cloneDeep(this.playersData);
       this.playerObs.next(result);
-    }, 2500); // emulate latency
+    }, 1); // emulate latency
   }
 
   createLobby(name: string) {

@@ -1,13 +1,56 @@
-<div class="panel {{panelType()}}">
+<!--<div class="panel {{panelType()}}">
   <div class="panel-heading">
-    <h3 class="panel-title">Lobby ID #{{lobby.lobbyId()}}</h3>
+    <h1 class="panel-title">{{lobby.lobbyName()}} <span class="pull-right"><small>Game ID: </small><span class="label label-default">{{lobby.id}}</span></span>
+    </h1>
   </div>
   <div class="panel-body">
-    {{lobby.lobbyName()}}
+    <p class="text-info">Players</p>
     <ul>
       <li *ngFor="let player of lobby.playerList()">
         {{player.playerId()}} ==> {{player.playerName()}}
       </li>
     </ul>
   </div>
-</div>
+</div>-->
+<table class="table table-striped table-condensed table-hover">
+  <thead>
+    <tr>
+      <th>one</th>
+      <th>two</th>
+      <th>three</th>
+      <th>four</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
