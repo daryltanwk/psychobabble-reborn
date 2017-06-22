@@ -3,7 +3,8 @@ export class Player {
         ONLINE: 1,
         IN_LOBBY: 2,
         IN_MATCH: 3,
-    }
+    };
+
     private status: number;
 
     constructor(
@@ -19,7 +20,7 @@ export class Player {
     getStatus() {
         return this.status;
     }
-    setStatus(state:number) {
+    setStatus(state: number) {
         if (state === Player.STATE.IN_LOBBY || state === Player.STATE.IN_MATCH || state === Player.STATE.ONLINE) {
             this.status = state;
         } else {

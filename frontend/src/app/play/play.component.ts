@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PlayersService } from '../services/players.service';
 import { LobbyService } from '../services/lobby.service';
-import { Player } from '../models/player.model'
+import { Player } from '../models/player.model';
 
 @Component({
   selector: 'app-play',
@@ -15,6 +15,7 @@ export class PlayComponent implements OnInit {
   // temporary variables
   formLobbyId: string;
   formLobbyName: string;
+  formHostId: string;
   formPlayerId: string;
   formPlayerName: string;
   formLobbyPlayerId: string;
@@ -40,7 +41,7 @@ export class PlayComponent implements OnInit {
   }
 
   addLobby() {
-    this.lobbyService.createLobby(this.formLobbyName);
+    this.lobbyService.createLobby(this.formLobbyName, this.formHostId);
   }
   removeLobby() {
     this.lobbyService.removeLobby(this.formLobbyId);

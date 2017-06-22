@@ -38,29 +38,30 @@ export class DatastoreService {
       new Player(this.makeId(), 'player-eighteen'),
     ];
 
-    this.lobbiesData = [
-      new Lobby(this.makeId(), 'fast game lets go'),
-      new Lobby(this.makeId(), 'blah blah lobby'),
-      new Lobby(this.makeId(), 'pizzpuzz'),
-      new Lobby(this.makeId(), 'the quick grey bunny'),
-      new Lobby(this.makeId(), 'no noobs.'),
-      new Lobby(this.makeId(), 'ready up or kik'),
-      new Lobby(this.makeId(), '5 round gogo'),
-      new Lobby(this.makeId(), 'a smart lobby name'),
-      new Lobby(this.makeId(), 'really? ok'),
-    ];
+    // this.lobbiesData = [
+    //   new Lobby(this.makeId(), 'fast game lets go'),
+    //   new Lobby(this.makeId(), 'blah blah lobby'),
+    //   new Lobby(this.makeId(), 'pizzpuzz'),
+    //   new Lobby(this.makeId(), 'the quick grey bunny'),
+    //   new Lobby(this.makeId(), 'no noobs.'),
+    //   new Lobby(this.makeId(), 'ready up or kik'),
+    //   new Lobby(this.makeId(), '5 round gogo'),
+    //   new Lobby(this.makeId(), 'a smart lobby name'),
+    //   new Lobby(this.makeId(), 'really? ok'),
+    // ];
+    this.lobbiesData = [];
 
     _.forEach(this.playersData, (plyr) => {
-      plyr.setStatus(Math.ceil(Math.random() * 3));
-     });
-
-    _.forEach(this.lobbiesData, (lby) => {
-      const joiners = Math.ceil(Math.random() * 5);
-      for (let i = 0; i < joiners; i++) {
-        const joinerIndex = Math.floor(Math.random() * this.playersData.length);
-        this.playerJoins(this.playersData[joinerIndex].playerId(), lby.lobbyId());
-      }
+      plyr.setStatus(1);
     });
+
+    // _.forEach(this.lobbiesData, (lby) => {
+    //   const joiners = Math.ceil(Math.random() * 5);
+    //   for (let i = 0; i < joiners; i++) {
+    //     const joinerIndex = Math.floor(Math.random() * this.playersData.length);
+    //     this.playerJoins(this.playersData[joinerIndex].playerId(), lby.lobbyId());
+    //   }
+    // });
 
     this.updateLobbies();
     this.updatePlayers();
@@ -81,9 +82,13 @@ export class DatastoreService {
     }, 1); // emulate latency
   }
 
-  createLobby(name: string) {
-    this.lobbiesData.push(new Lobby(this.makeId(), name));
+  createLobby(name: string, hostId: string) {
+    const lobbyId = this.makeId();
+    this.lobbiesData.push(new Lobby(lobbyId, name));
+    this.playerJoins(hostId, lobbyId);
+
     this.updateLobbies();
+    this.updatePlayers();
   }
 
   removeLobby(id) {
@@ -105,8 +110,13 @@ export class DatastoreService {
     const _lobby: Lobby = this.lobbiesData.find((lobby) => {
       return lobby.lobbyId() === lobbyId;
     });
-
+    console.log(playerId + '---' + lobbyId);
     _lobby.addPlayer(_player);
+
+    // update player status
+    _player.setStatus(Player.STATE.IN_LOBBY);
+
+    this.updatePlayers();
     this.updateLobbies();
   }
 
@@ -120,6 +130,13 @@ export class DatastoreService {
     });
 
     _lobby.removePlayer(_player);
+    if (_lobby.playerCount() === 0) {
+      this.removeLobby(lobbyId);
+    }
+    // update player status
+    _player.setStatus(Player.STATE.ONLINE);
+
+    this.updatePlayers();
     this.updateLobbies();
   }
 
@@ -130,6 +147,11 @@ export class DatastoreService {
     this.lobbiesData.forEach((lobby) => {
       lobby.removePlayer(_player);
     });
+
+    // update player status
+    _player.setStatus(null);
+
+    this.updatePlayers();
     this.updateLobbies();
   }
 

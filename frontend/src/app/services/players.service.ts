@@ -16,7 +16,7 @@ export class PlayersService {
     return this.players;
   }
 
-  getPlayersOfState(state:number) {
+  getPlayersOfState(state: number) {
     return this.players.filter((p) => {
       return p.getStatus() === state;
     });

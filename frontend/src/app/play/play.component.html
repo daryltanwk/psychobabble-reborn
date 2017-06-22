@@ -3,8 +3,8 @@
     <div class="col-xs-9">
       <h2>Game Lobbies <small>double-click to join</small> <span class="pull-right"><button class="btn btn-sm btn-primary"><i class="fa fa-fw fa-plus"></i>New Lobby</button></span></h2>
       <div class="row">
-        <div class="table-height col-xs-12">
-          <div class="list-group">
+        <div class="table-height col-xs-12 well well-sm">
+          <div *ngIf="lobbyService.lobbies.length>0; else random" class="list-group">
             <a *ngFor="let lobby of lobbyService.getLobbies()" class="list-group-item">
               <h4 class="list-group-item-heading">{{lobby.name}} <span class="pull-right"><span class="label label-primary">{{lobby.players.length}}/5</span>
                 <i class="fa-fw fa fa-lg fa-users"></i>
@@ -13,6 +13,9 @@
               <p class="list-group-item-text">created by <em>{{lobby.players[0].name}}</em></p>
             </a>
           </div>
+          <ng-template #random>
+            <p class="h3 text-center lead">oh no, there aren't any lobbies!</p>
+          </ng-template>
         </div>
       </div>
       <div class="row">
@@ -48,7 +51,9 @@
             <h2>Lobby Functions Test</h2>
             <!--stuff here-->
             <label for="lobbyName">Lobby Name</label>
-            <input id="lobbyName" [(ngModel)]="formLobbyName" type="text"><br>
+            <input id="lobbyName" [(ngModel)]="formLobbyName" type="text">
+            <label for="hostId">Host's ID</label>
+            <input id="hostId" [(ngModel)]="formHostId" type="text"><br>
             <button (click)="addLobby()" class="btn btn-success">add lobby</button>
             <hr>
             <label for="lobbyPlayerId">Player ID</label>
