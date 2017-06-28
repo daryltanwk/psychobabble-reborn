@@ -38,30 +38,11 @@ export class DatastoreService {
       new Player(this.makeId(), 'player-eighteen'),
     ];
 
-    // this.lobbiesData = [
-    //   new Lobby(this.makeId(), 'fast game lets go'),
-    //   new Lobby(this.makeId(), 'blah blah lobby'),
-    //   new Lobby(this.makeId(), 'pizzpuzz'),
-    //   new Lobby(this.makeId(), 'the quick grey bunny'),
-    //   new Lobby(this.makeId(), 'no noobs.'),
-    //   new Lobby(this.makeId(), 'ready up or kik'),
-    //   new Lobby(this.makeId(), '5 round gogo'),
-    //   new Lobby(this.makeId(), 'a smart lobby name'),
-    //   new Lobby(this.makeId(), 'really? ok'),
-    // ];
     this.lobbiesData = [];
 
     _.forEach(this.playersData, (plyr) => {
       plyr.setStatus(1);
     });
-
-    // _.forEach(this.lobbiesData, (lby) => {
-    //   const joiners = Math.ceil(Math.random() * 5);
-    //   for (let i = 0; i < joiners; i++) {
-    //     const joinerIndex = Math.floor(Math.random() * this.playersData.length);
-    //     this.playerJoins(this.playersData[joinerIndex].playerId(), lby.lobbyId());
-    //   }
-    // });
 
     this.updateLobbies();
     this.updatePlayers();
