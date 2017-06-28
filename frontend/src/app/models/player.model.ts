@@ -23,8 +23,6 @@ export class Player {
     setStatus(state: number) {
         if (state === PlayerState.IN_LOBBY || state === PlayerState.IN_MATCH || state === PlayerState.ONLINE) {
             this.status = state;
-        } else {
-            return false;
         }
     }
 }
