@@ -13,14 +13,3 @@
 .playerlist {
     word-wrap: break-word;
 }
-
-#table {
-    display: table;
-    margin-bottom: 20px;
-}
-
-#cell {
-    display:table-cell;
-    vertical-align: middle;
-    text-align: center;
-}
