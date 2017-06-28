@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 
 import { Lobby } from './../models/lobby.model';
-import { Player } from './../models/player.model';
+import { Player, PlayerState } from './../models/player.model';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import * as _ from 'lodash';
@@ -24,19 +24,26 @@ export class DatastoreService {
       new Player(this.makeId(), 'player-four'),
       new Player(this.makeId(), 'player-five'),
       new Player(this.makeId(), 'player-six'),
+      new Player(this.makeId(), 'player-seven'),
+      new Player(this.makeId(), 'player-eight'),
+      new Player(this.makeId(), 'player-nine'),
+      new Player(this.makeId(), 'player-ten'),
+      new Player(this.makeId(), 'player-eleven'),
+      new Player(this.makeId(), 'player-twelve'),
+      new Player(this.makeId(), 'player-thirteen'),
+      new Player(this.makeId(), 'player-fourteen'),
+      new Player(this.makeId(), 'player-fifteen'),
+      new Player(this.makeId(), 'player-sixteen'),
+      new Player(this.makeId(), 'player-seventeen'),
+      new Player(this.makeId(), 'player-eighteen'),
     ];
 
-    this.lobbiesData = [
-      new Lobby(this.makeId(), 'lobby-one'),
-      new Lobby(this.makeId(), 'lobby-two'),
-      new Lobby(this.makeId(), 'lobby-three'),
-      new Lobby(this.makeId(), 'lobby-four'),
-      new Lobby(this.makeId(), 'lobby-five'),
-      new Lobby(this.makeId(), 'lobby-six'),
-      new Lobby(this.makeId(), 'lobby-seven'),
-      new Lobby(this.makeId(), 'lobby-eight'),
-      new Lobby(this.makeId(), 'lobby-nine'),
-    ];
+    this.lobbiesData = [];
+
+    this.playersData.forEach((plyr) => {
+      plyr.setStatus(PlayerState.ONLINE);
+    });
+
     this.updateLobbies();
     this.updatePlayers();
   }
@@ -46,19 +53,23 @@ export class DatastoreService {
     setTimeout(() => {
       const result = _.cloneDeep(this.lobbiesData);
       this.lobbyObs.next(result);
-    }, 1500); // emulate latency
+    }, 1); // emulate latency
   }
 
   updatePlayers() {
     setTimeout(() => {
       const result = _.cloneDeep(this.playersData);
       this.playerObs.next(result);
-    }, 2500); // emulate latency
+    }, 1); // emulate latency
   }
 
-  createLobby(name: string) {
-    this.lobbiesData.push(new Lobby(this.makeId(), name));
+  createLobby(name: string, hostId: string) {
+    const lobbyId = this.makeId();
+    this.lobbiesData.push(new Lobby(lobbyId, name));
+    this.playerJoins(hostId, lobbyId);
+
     this.updateLobbies();
+    this.updatePlayers();
   }
 
   removeLobby(id) {
@@ -82,6 +93,11 @@ export class DatastoreService {
     });
 
     _lobby.addPlayer(_player);
+
+    // update player status
+    _player.setStatus(PlayerState.IN_LOBBY);
+
+    this.updatePlayers();
     this.updateLobbies();
   }
 
@@ -95,6 +111,13 @@ export class DatastoreService {
     });
 
     _lobby.removePlayer(_player);
+    if (_lobby.playerCount() === 0) {
+      this.removeLobby(lobbyId);
+    }
+    // update player status
+    _player.setStatus(PlayerState.ONLINE);
+
+    this.updatePlayers();
     this.updateLobbies();
   }
 
@@ -105,6 +128,11 @@ export class DatastoreService {
     this.lobbiesData.forEach((lobby) => {
       lobby.removePlayer(_player);
     });
+
+    // update player status
+    _player.setStatus(null);
+
+    this.updatePlayers();
     this.updateLobbies();
   }
 

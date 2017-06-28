@@ -9,7 +9,7 @@ export class LobbyService {
   private lobbySub: Subscription;
   constructor(private datastoreService: DatastoreService) {
     this.lobbySub = this.datastoreService.lobbyObs.subscribe((lobbyData: Lobby[]) => {
-      this.lobbies = lobbyData.slice(0);
+      this.lobbies = lobbyData;
     });
   }
 
@@ -23,9 +23,9 @@ export class LobbyService {
     });
   }
 
-  createLobby(name: string) {
+  createLobby(name: string, hostId: string) {
     // insert actual backend call here
-    this.datastoreService.createLobby(name);
+    this.datastoreService.createLobby(name, hostId);
   }
 
   removeLobby(id) {

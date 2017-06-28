@@ -5,7 +5,8 @@ export class Lobby {
 
     constructor(
         private id: string,
-        private name: string
+        private name: string,
+        private timeCreated = new Date(),
     ) {
         this.players = [];
     }

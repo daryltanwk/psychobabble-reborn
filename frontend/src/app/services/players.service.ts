@@ -16,6 +16,12 @@ export class PlayersService {
     return this.players;
   }
 
+  getPlayersOfState(state: number) {
+    return this.players.filter((p) => {
+      return p.getStatus() === state;
+    });
+  }
+
   getPlayerCount() {
     return this.players.length;
   }
