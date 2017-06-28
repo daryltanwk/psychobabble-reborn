@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PlayersService } from '../services/players.service';
 import { LobbyService } from '../services/lobby.service';
-import { Player } from '../models/player.model';
+import { Player, PlayerState } from '../models/player.model';
 
 @Component({
   selector: 'app-play',
@@ -10,7 +10,7 @@ import { Player } from '../models/player.model';
 })
 export class PlayComponent implements OnInit {
   selectedLobbyId: string;
-  playerStates = Player.STATE;
+  playerStates = PlayerState;
 
   // temporary variables
   formLobbyId: string;

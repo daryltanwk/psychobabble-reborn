@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 
 import { Lobby } from './../models/lobby.model';
-import { Player } from './../models/player.model';
+import { Player, PlayerState } from './../models/player.model';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import * as _ from 'lodash';
@@ -40,8 +40,8 @@ export class DatastoreService {
 
     this.lobbiesData = [];
 
-    _.forEach(this.playersData, (plyr) => {
-      plyr.setStatus(1);
+    this.playersData.forEach((plyr) => {
+      plyr.setStatus(PlayerState.ONLINE);
     });
 
     this.updateLobbies();
@@ -91,11 +91,11 @@ export class DatastoreService {
     const _lobby: Lobby = this.lobbiesData.find((lobby) => {
       return lobby.lobbyId() === lobbyId;
     });
-    console.log(playerId + '---' + lobbyId);
+
     _lobby.addPlayer(_player);
 
     // update player status
-    _player.setStatus(Player.STATE.IN_LOBBY);
+    _player.setStatus(PlayerState.IN_LOBBY);
 
     this.updatePlayers();
     this.updateLobbies();
@@ -115,7 +115,7 @@ export class DatastoreService {
       this.removeLobby(lobbyId);
     }
     // update player status
-    _player.setStatus(Player.STATE.ONLINE);
+    _player.setStatus(PlayerState.ONLINE);
 
     this.updatePlayers();
     this.updateLobbies();

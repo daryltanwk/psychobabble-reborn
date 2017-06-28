@@ -1,10 +1,10 @@
-export class Player {
-    public static STATE = {
-        ONLINE: 1,
-        IN_LOBBY: 2,
-        IN_MATCH: 3,
-    };
+export enum PlayerState {
+    ONLINE = 1,
+    IN_LOBBY = 2,
+    IN_MATCH = 3
+}
 
+export class Player {
     private status: number;
 
     constructor(
@@ -21,7 +21,7 @@ export class Player {
         return this.status;
     }
     setStatus(state: number) {
-        if (state === Player.STATE.IN_LOBBY || state === Player.STATE.IN_MATCH || state === Player.STATE.ONLINE) {
+        if (state === PlayerState.IN_LOBBY || state === PlayerState.IN_MATCH || state === PlayerState.ONLINE) {
             this.status = state;
         } else {
             return false;
