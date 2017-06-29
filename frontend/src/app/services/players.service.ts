@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs/Subscription';
 import { DatastoreService } from './datastore.service';
 import { Injectable } from '@angular/core';
 import { Player } from '../models/player.model';
@@ -5,10 +6,12 @@ import { Player } from '../models/player.model';
 @Injectable()
 export class PlayersService {
   private players: Array<Player>;
+  private playersSub: Subscription;
+  private currentPlayer: Player;
 
   constructor(private datastoreService: DatastoreService) {
-    this.datastoreService.playerObs.subscribe((playerData: Array<Player>) => {
-      this.players = playerData.slice(0);
+    this.playersSub = this.datastoreService.playerObs.subscribe((playerData: Array<Player>) => {
+      this.players = playerData;
     });
   }
 

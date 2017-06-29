@@ -77,10 +77,16 @@ export class DatastoreService {
       return (lobby.lobbyId() === id);
     });
 
+    this.lobbiesData[index].playerList().forEach((plyr) => {
+      plyr.setStatus(PlayerState.ONLINE);
+    });
+
     if (typeof index !== 'undefined') {
       this.lobbiesData.splice(index, 1);
     }
+
     this.updateLobbies();
+    this.updatePlayers();
   }
 
   playerJoins(playerId: string, lobbyId: string) {
@@ -139,6 +145,7 @@ export class DatastoreService {
   addPlayer(playerName: string) {
     // insert actual backend call here
     const player = new Player(this.makeId(), playerName);
+    player.setStatus(PlayerState.ONLINE);
     this.playersData.push(player);
     this.updatePlayers();
   }
