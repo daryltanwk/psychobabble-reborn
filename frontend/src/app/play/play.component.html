@@ -61,7 +61,7 @@
             <input id="lobbyName" [(ngModel)]="formLobbyName" type="text">
             <label for="hostId">Host</label>
             <select name="hostId" id="hostId" [(ngModel)]="formHostId">
-              <option *ngFor="let p of playersService.getPlayers()"value="{{p.id}}">{{p.name}}</option>
+              <option *ngFor="let p of playersService.getPlayersOfState(playerStates.ONLINE)"value="{{p.id}}">{{p.name}}</option>
             </select><br>
             <!--<input id="hostId" [(ngModel)]="formHostId" type="text"><br>-->
             <button (click)="addLobby()" class="btn btn-success">add lobby</button>

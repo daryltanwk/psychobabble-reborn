@@ -22,11 +22,6 @@ export class PlayersService {
     this.currentPlayer = playerId;
   }
 
-  logOut() {
-    this.currentPlayer = null;
-    this.removePlayer(this.currentPlayer);
-  }
-
   getPlayers() {
     return this.players;
   }
