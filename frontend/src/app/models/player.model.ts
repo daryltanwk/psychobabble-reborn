@@ -1,4 +1,5 @@
 export enum PlayerState {
+    OFFLINE = 0,
     ONLINE = 1,
     IN_LOBBY = 2,
     IN_MATCH = 3

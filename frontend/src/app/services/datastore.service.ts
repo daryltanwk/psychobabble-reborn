@@ -1,10 +1,11 @@
 // This Service is a emulation of the actual database/backend and should be removed from the app once backend is ready
 import { Injectable } from '@angular/core';
 
-import { Lobby } from './../models/lobby.model';
-import { Player, PlayerState } from './../models/player.model';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
+import { Lobby } from './../models/lobby.model';
+import { Player, PlayerState } from './../models/player.model';
 import * as _ from 'lodash';
 
 @Injectable()
@@ -136,18 +137,34 @@ export class DatastoreService {
     });
 
     // update player status
-    _player.setStatus(null);
+    _player.setStatus(PlayerState.OFFLINE);
 
     this.updatePlayers();
     this.updateLobbies();
   }
+  
+  isDuplicate(playerName: string): boolean {
+    return (typeof this.playersData.find((plyr) => {
+      return (plyr.playerName() === playerName);
+    }) !== 'undefined');
+  }
 
-  addPlayer(playerName: string) {
+  registerPlayer(playerName: string): boolean | string {
+    // REGISTER THE PLAYER HERE
+    if (this.isDuplicate(playerName)) {
+      return false;
+    } else {
+      return this.addPlayer(playerName);
+    }
+  }
+
+  addPlayer(playerName: string): string {
     // insert actual backend call here
     const player = new Player(this.makeId(), playerName);
     player.setStatus(PlayerState.ONLINE);
     this.playersData.push(player);
     this.updatePlayers();
+    return player.playerId();
   }
 
   removePlayer(playerId: string) {
