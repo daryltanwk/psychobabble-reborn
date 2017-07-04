@@ -42,7 +42,7 @@ export class PlayersService {
         const result = this.datastoreService.registerPlayer(playerName);
         if (result) {
           observer.next(result);
-          observer.complete()
+          observer.complete();
         } else {
           observer.error('Sorry, "' + playerName + '" is already taken.');
         }

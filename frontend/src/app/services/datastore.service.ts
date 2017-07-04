@@ -142,7 +142,7 @@ export class DatastoreService {
     this.updatePlayers();
     this.updateLobbies();
   }
-  
+
   isDuplicate(playerName: string): boolean {
     return (typeof this.playersData.find((plyr) => {
       return (plyr.playerName() === playerName);
