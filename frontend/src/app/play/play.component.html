@@ -63,16 +63,13 @@
             <select name="hostId" id="hostId" [(ngModel)]="formHostId">
               <option *ngFor="let p of playersService.getPlayersOfState(playerStates.ONLINE)"value="{{p.id}}">{{p.name}}</option>
             </select><br>
-            <!--<input id="hostId" [(ngModel)]="formHostId" type="text"><br>-->
             <button (click)="addLobby()" class="btn btn-success">add lobby</button>
             <hr>
             <label for="lobbyPlayerId">Player</label>
-            <!--<input [(ngModel)]="formLobbyPlayerId" type="text" id="lobbyPlayerId">-->
             <select name="lobbyPlayerId" id="lobbyPlayerId" [(ngModel)]="formLobbyPlayerId">
               <option *ngFor="let p of playersService.getPlayers()"value="{{p.id}}">{{p.name}}</option>
             </select>
             <label for="lobbyId">Lobby</label>
-            <!--<input id="lobbyId" [(ngModel)]="formLobbyId" type="text"><br>-->
             <select name="lobbyId" id="lobbyId" [(ngModel)]="formLobbyId">
               <option *ngFor="let l of lobbyService.getLobbies()" value="{{l.id}}">{{l.name}}</option>
             </select><br>
@@ -110,7 +107,6 @@
             <button (click)="addPlayer()" class="btn btn-success">add player</button><br>
             <hr>
             <label for="playerId">Player</label>
-            <!--<input id="playerId" [(ngModel)]="formPlayerId" type="text"><br>-->
             <select name="playerId" id="playerId" [(ngModel)]="formPlayerId">
               <option *ngFor="let p of playersService.getPlayers()"value="{{p.id}}">{{p.name}}</option>
             </select>

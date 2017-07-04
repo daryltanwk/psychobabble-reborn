@@ -9,7 +9,6 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { PlayComponent } from './play/play.component';
 import { AuthGuard } from './guards/auth-guard.service';
-import { AuthService } from './services/auth.service';
 import { DatastoreService } from './services/datastore.service';
 import { PlayersService } from './services/players.service';
 import { LobbyService } from './services/lobby.service';

@@ -38,6 +38,7 @@ export class RegisterComponent implements OnInit {
         this.registerForm.enable();
       },
       complete: () => {
+        this.registerPlayerSub.unsubscribe();
         this.router.navigate(['/play']);
       }
     };
