@@ -46,7 +46,7 @@ export class PlayersService {
         } else {
           observer.error('Sorry, "' + playerName + '" is already taken.');
         }
-      }, 1500);
+      }, 100);
     });
     return observable;
   }
