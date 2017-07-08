@@ -15,6 +15,8 @@ import { DatastoreService } from './services/datastore.service';
 import { PlayersService } from './services/players.service';
 import { LobbyService } from './services/lobby.service';
 import { RegisterComponent } from './register/register.component';
+import { MainMenuComponent } from './play/main-menu/main-menu.component';
+import { TestareaComponent } from './play/testarea/testarea.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { RegisterComponent } from './register/register.component';
     HomeComponent,
     PlayComponent,
     RegisterComponent,
+    MainMenuComponent,
+    TestareaComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,82 @@
+<div class="container">
+  <div class="row">
+    <div class="row">
+      <div class="col-xs-6">
+        <div class="row">
+          <div class="col-xs-12">
+            <h2>Lobby Functions Test</h2>
+            <!--stuff here-->
+            <label for="lobbyName">Lobby Name</label>
+            <input id="lobbyName" [(ngModel)]="formLobbyName" type="text">
+            <label for="hostId">Host</label>
+            <select name="hostId" id="hostId" [(ngModel)]="formHostId">
+              <option *ngFor="let p of playersService.getPlayersOfState(playerStates.ONLINE)"value="{{p.id}}">{{p.name}}</option>
+            </select><br>
+            <button (click)="addLobby()" class="btn btn-success">add lobby</button>
+            <hr>
+            <label for="lobbyPlayerId">Player</label>
+            <select name="lobbyPlayerId" id="lobbyPlayerId" [(ngModel)]="formLobbyPlayerId">
+              <option *ngFor="let p of playersService.getPlayers()"value="{{p.id}}">{{p.name}}</option>
+            </select>
+            <label for="lobbyId">Lobby</label>
+            <select name="lobbyId" id="lobbyId" [(ngModel)]="formLobbyId">
+              <option *ngFor="let l of lobbyService.getLobbies()" value="{{l.id}}">{{l.name}}</option>
+            </select><br>
+            <button (click)="playerJoinsLobby()" class="btn btn-warning">Add Player to Lobby</button>
+            <button (click)="playerLeavesLobby()" class="btn btn-info">Remove Player from Lobby</button>
+            <button (click)="removeLobby()" class="btn btn-danger">remove lobby</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <h3>Lobby Info at a glance</h3>
+            <!--INFO HERE-->
+            <div class="row">
+              <div class="col-xs-12">
+                <ul>
+                  <li *ngFor="let lobby of lobbyService.getLobbies()">
+                    {{lobby.id}} ==> {{lobby.name}}
+                    <ul *ngFor="let player of lobby.playerList()">
+                      <li>{{player.id}} ==> {{player.name}}</li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <div class="row">
+          <div class="col-xs-12">
+            <h2>Player Functions Test</h2>
+            <!--stuff here-->
+            <label for="playerName">Player Name</label>
+            <input id="playerName" [(ngModel)]="formPlayerName" type="text"><br>
+            <button (click)="addPlayer()" class="btn btn-success">add player</button><br>
+            <hr>
+            <label for="playerId">Player</label>
+            <select name="playerId" id="playerId" [(ngModel)]="formPlayerId">
+              <option *ngFor="let p of playersService.getPlayers()"value="{{p.id}}">{{p.name}}</option>
+            </select>
+            <button (click)="removePlayer()" class="btn btn-danger">remove player</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <h3>Players Info at a glance</h3>
+            <!--INFO HERE-->
+            <ul>
+              <li *ngFor="let player of playersService.getPlayers()">
+                {{player.id}} ==> {{player.name}}
+                <ul>
+                  <li>State: {{player.status}}</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

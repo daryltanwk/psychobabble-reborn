@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-9">
+      <h2>Game Lobbies <small>double-click to join</small> <span class="pull-right"><button (click)="newLobbyModal.show()" class="btn btn-sm btn-primary"><i class="fa fa-fw fa-plus"></i>New Lobby</button></span></h2>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="table-height well well-sm">
+            <div *ngIf="lobbyService.lobbies.length>0; else random" class="list-group">
+              <a *ngFor="let lobby of lobbyService.getLobbies()" class="list-group-item">
+                <h4 class="list-group-item-heading">{{lobby.name}} <span class="pull-right"><span class="label label-primary">{{lobby.players.length}}/5</span>
+                  <i class="fa-fw fa fa-lg fa-users"></i>
+                  </span>
+                </h4>
+                <p class="list-group-item-text">created by <em>{{lobby.players[0].name}}</em></p>
+              </a>
+            </div>
+            <ng-template #random>
+              <p class="h3 text-center lead">oh no, there aren't any lobbies!</p>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="chat-height">
+            <p class="h5 lead text-center">
+              &lt;chat-module&gt;<br> coming not-so-soon<br> &lt;/chat-module&gt;
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="playerlist col-xs-3">
+      <h2>
+        Active Players
+      </h2>
+      <h3 class="text-success">Online</h3>
+      <span *ngFor="let p of playersService.getPlayersOfState(playerStates.ONLINE)">
+        <span class="label label-success">{{p.name}}</span><br>
+      </span>
+      <h3 class="text-info">In-Lobby</h3>
+      <span *ngFor="let p of playersService.getPlayersOfState(playerStates.IN_LOBBY)">
+        <span class="label label-info">{{p.name}}</span><br>
+      </span>
+      <h3 class="text-warning">In-Match</h3>
+      <span *ngFor="let p of playersService.getPlayersOfState(playerStates.IN_MATCH)">
+        <span class="label label-warning">{{p.name}}</span><br>
+      </span>
+    </div>
+  </div>
+
+  <div class="modal fade" (onShown)="focusInput()" bsModal #newLobbyModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1"
+    role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">New Lobby Title</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="newLobbyModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="newLobbyForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <input #lobbyName placeholder="e.g. panda poop" formControlName="lobbyName" type="text" class="form-control"><br>
+              <button class="btn btn-primary btn-block">Go!</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

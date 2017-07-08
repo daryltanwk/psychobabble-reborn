@@ -1,3 +1,4 @@
+import { MainMenuComponent } from './play/main-menu/main-menu.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
@@ -15,7 +16,12 @@ const routes: Routes = [
   {
     path: 'play',
     component: PlayComponent,
-    children: [],
+    children: [
+      {
+        path: '',
+        component: MainMenuComponent
+      },
+    ],
     canActivate: [AuthGuard],
   },
   {

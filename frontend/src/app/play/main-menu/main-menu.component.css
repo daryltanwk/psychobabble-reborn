@@ -1,0 +1,15 @@
+.table-height {
+    height: 400px;
+    /*background-color: bisque;*/
+    overflow:scroll;
+    word-wrap: break-word;
+}
+
+.chat-height {
+    background-color: skyblue;
+    height:250px;
+}
+
+.playerlist {
+    word-wrap: break-word;
+}
