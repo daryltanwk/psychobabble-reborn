@@ -5,6 +5,8 @@ import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
 
+import { ModalModule } from 'ngx-bootstrap/modal';
+
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { PlayComponent } from './play/play.component';
@@ -26,7 +28,8 @@ import { RegisterComponent } from './register/register.component';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ModalModule.forRoot(),
   ],
   providers: [PlayersService, LobbyService, DatastoreService, AuthGuard],
   bootstrap: [AppComponent]

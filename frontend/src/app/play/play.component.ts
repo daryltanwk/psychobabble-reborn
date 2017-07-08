@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Validators, FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { PlayersService } from '../services/players.service';
 import { LobbyService } from '../services/lobby.service';
 import { Player, PlayerState } from '../models/player.model';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-play',
@@ -12,6 +14,8 @@ import { Player, PlayerState } from '../models/player.model';
 export class PlayComponent implements OnInit {
   selectedLobbyId: string;
   playerStates = PlayerState;
+  newLobbyForm: FormGroup;
+  @ViewChild('newLobbyModal') newLobbyModal: ModalDirective;
 
   // temporary variables
   formLobbyId: string;
@@ -21,9 +25,18 @@ export class PlayComponent implements OnInit {
   formPlayerName: string;
   formLobbyPlayerId: string;
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.newLobbyForm = new FormGroup({
+      lobbyName: new FormControl(null, Validators.required)
+    });
+  }
 
   constructor(private playersService: PlayersService, private lobbyService: LobbyService) { }
+
+  onSubmit() {
+    this.newLobbyModal.hide();
+    this.lobbyService.createLobby(this.newLobbyForm.get('lobbyName').value, this.playersService.currentPlayer)
+  }
 
   lobbySelected() {
     return (this.selectedLobbyId);
@@ -40,6 +53,8 @@ export class PlayComponent implements OnInit {
       this.selectedLobbyId = lobbyId;
     }
   }
+
+  // Test Functions Below
 
   addLobby() {
     this.lobbyService.createLobby(this.formLobbyName, this.formHostId);
