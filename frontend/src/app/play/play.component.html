@@ -49,7 +49,7 @@
     </div>
   </div>
 
-  <div class="modal fade" bsModal #newLobbyModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal fade" (onShown)="focusInput()" bsModal #newLobbyModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
@@ -61,7 +61,7 @@
         <div class="modal-body">
           <form [formGroup]="newLobbyForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
-              <input placeholder="e.g. panda poop" formControlName="lobbyName" type="text" class="form-control"><br>
+              <input #lobbyName placeholder="e.g. panda poop" formControlName="lobbyName" type="text" class="form-control"><br>
               <button class="btn btn-primary btn-block">Go!</button>
             </div>
           </form>

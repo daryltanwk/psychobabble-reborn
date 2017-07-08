@@ -1,5 +1,5 @@
 import { Validators, FormControl, FormGroup } from '@angular/forms';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import { PlayersService } from '../services/players.service';
 import { LobbyService } from '../services/lobby.service';
@@ -16,6 +16,7 @@ export class PlayComponent implements OnInit {
   playerStates = PlayerState;
   newLobbyForm: FormGroup;
   @ViewChild('newLobbyModal') newLobbyModal: ModalDirective;
+  @ViewChild('lobbyName') lobbyName: ElementRef;
 
   // temporary variables
   formLobbyId: string;
@@ -34,8 +35,14 @@ export class PlayComponent implements OnInit {
   constructor(private playersService: PlayersService, private lobbyService: LobbyService) { }
 
   onSubmit() {
+    const lobbyName = this.newLobbyForm.get('lobbyName').value;
+    const hostId = this.playersService.currentPlayer;
     this.newLobbyModal.hide();
-    this.lobbyService.createLobby(this.newLobbyForm.get('lobbyName').value, this.playersService.currentPlayer)
+    this.lobbyService.createLobby(lobbyName, hostId);
+  }
+
+  focusInput() {
+    this.lobbyName.nativeElement.focus();
   }
 
   lobbySelected() {
