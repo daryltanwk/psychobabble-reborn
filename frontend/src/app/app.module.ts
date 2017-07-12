@@ -10,13 +10,15 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { PlayComponent } from './play/play.component';
-import { AuthGuard } from './guards/auth-guard.service';
+import { InGameGuard } from './guards/in-game.guard';
+import { AuthGuard } from './guards/auth.guard';
 import { DatastoreService } from './services/datastore.service';
 import { PlayersService } from './services/players.service';
 import { LobbyService } from './services/lobby.service';
 import { RegisterComponent } from './register/register.component';
 import { MainMenuComponent } from './play/main-menu/main-menu.component';
 import { TestareaComponent } from './play/testarea/testarea.component';
+import { MainStageComponent } from './play/main-stage/main-stage.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { TestareaComponent } from './play/testarea/testarea.component';
     RegisterComponent,
     MainMenuComponent,
     TestareaComponent,
+    MainStageComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,7 +38,7 @@ import { TestareaComponent } from './play/testarea/testarea.component';
     AppRoutingModule,
     ModalModule.forRoot(),
   ],
-  providers: [PlayersService, LobbyService, DatastoreService, AuthGuard],
+  providers: [PlayersService, LobbyService, DatastoreService, AuthGuard, InGameGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

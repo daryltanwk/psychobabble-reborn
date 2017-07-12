@@ -1,3 +1,5 @@
+import { Subscription } from 'rxjs/Subscription';
+import { Router } from '@angular/router';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
@@ -12,13 +14,14 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
   styleUrls: ['./main-menu.component.css']
 })
 export class MainMenuComponent implements OnInit {
+  private createdLobbySub: Subscription;
   selectedLobbyId: string;
   playerStates = PlayerState;
   newLobbyForm: FormGroup;
   @ViewChild('newLobbyModal') newLobbyModal: ModalDirective;
   @ViewChild('lobbyName') lobbyName: ElementRef;
 
-  constructor(private playersService: PlayersService, private lobbyService: LobbyService) { }
+  constructor(private playersService: PlayersService, private lobbyService: LobbyService, private router: Router) { }
 
   ngOnInit() {
     this.newLobbyForm = new FormGroup({
@@ -27,10 +30,22 @@ export class MainMenuComponent implements OnInit {
   }
 
   onSubmit() {
+    this.newLobbyForm.disable();
     const lobbyName = this.newLobbyForm.get('lobbyName').value;
     const hostId = this.playersService.currentPlayer;
-    this.newLobbyModal.hide();
-    this.lobbyService.createLobby(lobbyName, hostId);
+    const observer = {
+      next: (result: string) => {
+        this.lobbyService.currentLobby = result;
+        this.router.navigate(['/play', result]);
+      },
+      error: (err: string) => {
+        this.newLobbyForm.enable();
+      },
+      complete: () => {
+        this.createdLobbySub.unsubscribe();
+      }
+    };
+    this.createdLobbySub = this.lobbyService.addLobby(lobbyName, hostId).subscribe(observer);
   }
 
   focusInput() {

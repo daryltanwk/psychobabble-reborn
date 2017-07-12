@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 
 import { Subscription } from 'rxjs/Subscription';
@@ -9,6 +10,8 @@ import { Lobby } from '../models/lobby.model';
 export class LobbyService {
   private lobbies: Array<Lobby>;
   private lobbySub: Subscription;
+  currentLobby: null | string = null;
+
   constructor(private datastoreService: DatastoreService) {
     this.lobbySub = this.datastoreService.lobbyObs.subscribe((lobbyData: Lobby[]) => {
       this.lobbies = lobbyData;
@@ -23,6 +26,22 @@ export class LobbyService {
     return this.lobbies.find((lobby) => {
       return lobby.lobbyId() === id;
     });
+  }
+
+  addLobby(name: string, hostId: string): Observable<boolean | string> {
+    const observable = Observable.create((observer) => {
+      setTimeout(() => {
+        const result = this.datastoreService.createLobby(name, hostId);
+        if (result) {
+          observer.next(result);
+          observer.complete();
+        } else {
+          observer.error('Failed to create lobby');
+        }
+      }, 100);
+    });
+
+    return observable;
   }
 
   createLobby(name: string, hostId: string) {

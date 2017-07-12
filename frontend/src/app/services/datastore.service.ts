@@ -54,23 +54,25 @@ export class DatastoreService {
     setTimeout(() => {
       const result = _.cloneDeep(this.lobbiesData);
       this.lobbyObs.next(result);
-    }, 1); // emulate latency
+    }, 200); // emulate latency
   }
 
   updatePlayers() {
     setTimeout(() => {
       const result = _.cloneDeep(this.playersData);
       this.playerObs.next(result);
-    }, 1); // emulate latency
+    }, 200); // emulate latency
   }
 
-  createLobby(name: string, hostId: string) {
+  createLobby(name: string, hostId: string): string {
     const lobbyId = this.makeId();
     this.lobbiesData.push(new Lobby(lobbyId, name));
     this.playerJoins(hostId, lobbyId);
 
     this.updateLobbies();
     this.updatePlayers();
+
+    return lobbyId;
   }
 
   removeLobby(id) {
@@ -138,7 +140,6 @@ export class DatastoreService {
 
     // update player status
     _player.setStatus(PlayerState.OFFLINE);
-
     this.updatePlayers();
     this.updateLobbies();
   }

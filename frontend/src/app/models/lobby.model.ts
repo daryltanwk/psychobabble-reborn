@@ -1,14 +1,15 @@
 import { Player } from './player.model';
 
 export class Lobby {
+    private gameInfo: {};
     private players: Array<Player>;
-
     constructor(
         private id: string,
         private name: string,
         private timeCreated = new Date(),
     ) {
         this.players = [];
+        this.gameInfo = {};
     }
 
     playerCount() {
@@ -35,6 +36,8 @@ export class Lobby {
         const pIndex = this.players.findIndex((currentPlayer) => {
             return player.playerId() === currentPlayer.playerId();
         });
-        this.players.splice(pIndex, 1);
+        if (pIndex !== -1) {
+            this.players.splice(pIndex, 1);
+        }
     }
 }

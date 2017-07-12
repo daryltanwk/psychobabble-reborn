@@ -1,7 +1,8 @@
 import { LobbyService } from './../../services/lobby.service';
 import { PlayersService } from './../../services/players.service';
 import { Component, OnInit } from '@angular/core';
-import { PlayerState } from "app/models/player.model";
+
+import { PlayerState } from '../../models/player.model';
 
 @Component({
   selector: 'app-testarea',
