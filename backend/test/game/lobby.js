@@ -74,4 +74,41 @@ describe('Psychobabble Lobby', function() {
       expect(lobby.players()).to.include(testPlayers[1]);
     });
   });
+
+  describe('start', function() {
+    it('should return false if there are not enough players', function() {
+      var lobby = Lobby(testPlayers[0]);
+      lobby.addPlayer(testPlayers[1]);
+
+      expect(lobby.start()).to.be.false;
+    });
+
+    it('should return true if there are at least 3 players', function() {
+      var lobby = Lobby(testPlayers[0]);
+      lobby.addPlayer(testPlayers[1]);
+      lobby.addPlayer(testPlayers[2]);
+
+      expect(lobby.start()).to.be.true;
+    });
+  });
+
+  describe('currentRound', function() {
+    it('should return undefined if the game has not started', function() {
+      var lobby = Lobby(testPlayers[0]);
+      lobby.addPlayer(testPlayers[1]);
+      lobby.addPlayer(testPlayers[2]);
+
+      expect(lobby.currentRound()).to.be.undefined;
+    });
+
+    it('should return a round if the game has started', function() {
+      var lobby = Lobby(testPlayers[0]);
+      lobby.addPlayer(testPlayers[1]);
+      lobby.addPlayer(testPlayers[2]);
+
+      lobby.start();
+
+      expect(lobby.currentRound()).to.be.an('object');
+    });
+  });
 });
