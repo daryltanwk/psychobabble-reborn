@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Lobby } from '../models/lobby.model';
-import { DatastoreService } from './datastore.service';
+
 import { Subscription } from 'rxjs/Subscription';
+
+import { DatastoreService } from './datastore.service';
+import { Lobby } from '../models/lobby.model';
 
 @Injectable()
 export class LobbyService {

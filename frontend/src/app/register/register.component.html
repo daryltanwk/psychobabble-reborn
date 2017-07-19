@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <h2 class="text-center">Register User</h2><br>
+    </div>
+    <div class="row">
+      <div class="col-xs-4 col-xs-offset-4">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <div class="form-group" [class.has-error]="submitFailed && registerForm.untouched">
+            <input formControlName="username" placeholder="Enter a username here" class="form-control" type="text">
+            <span *ngIf="submitFailed && registerForm.untouched; else noerror" class="help-block">{{error}}<br></span>
+            <ng-template #noerror> <span class="help-block"><br></span></ng-template>
+          </div>
+          <div class="form-group text-center">
+            <button [disabled]="registerForm.invalid" class="btn btn-primary" type="submit">Register</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

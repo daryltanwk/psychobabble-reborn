@@ -1,7 +1,10 @@
-import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from 'app/home/home.component';
-import { PlayComponent } from 'app/play/play.component';
+import { NgModule } from '@angular/core';
+
+import { AuthGuard } from './guards/auth-guard.service';
+import { RegisterComponent } from './register/register.component';
+import { HomeComponent } from './home/home.component';
+import { PlayComponent } from './play/play.component';
 
 const routes: Routes = [
   {
@@ -12,8 +15,15 @@ const routes: Routes = [
   {
     path: 'play',
     component: PlayComponent,
-    children: []
-  }
+    children: [],
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    children: [],
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

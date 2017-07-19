@@ -59,14 +59,20 @@
             <!--stuff here-->
             <label for="lobbyName">Lobby Name</label>
             <input id="lobbyName" [(ngModel)]="formLobbyName" type="text">
-            <label for="hostId">Host's ID</label>
-            <input id="hostId" [(ngModel)]="formHostId" type="text"><br>
+            <label for="hostId">Host</label>
+            <select name="hostId" id="hostId" [(ngModel)]="formHostId">
+              <option *ngFor="let p of playersService.getPlayersOfState(playerStates.ONLINE)"value="{{p.id}}">{{p.name}}</option>
+            </select><br>
             <button (click)="addLobby()" class="btn btn-success">add lobby</button>
             <hr>
-            <label for="lobbyPlayerId">Player ID</label>
-            <input [(ngModel)]="formLobbyPlayerId" type="text" id="lobbyPlayerId">
-            <label for="lobbyId">Lobby ID</label>
-            <input id="lobbyId" [(ngModel)]="formLobbyId" type="text"><br>
+            <label for="lobbyPlayerId">Player</label>
+            <select name="lobbyPlayerId" id="lobbyPlayerId" [(ngModel)]="formLobbyPlayerId">
+              <option *ngFor="let p of playersService.getPlayers()"value="{{p.id}}">{{p.name}}</option>
+            </select>
+            <label for="lobbyId">Lobby</label>
+            <select name="lobbyId" id="lobbyId" [(ngModel)]="formLobbyId">
+              <option *ngFor="let l of lobbyService.getLobbies()" value="{{l.id}}">{{l.name}}</option>
+            </select><br>
             <button (click)="playerJoinsLobby()" class="btn btn-warning">Add Player to Lobby</button>
             <button (click)="playerLeavesLobby()" class="btn btn-info">Remove Player from Lobby</button>
             <button (click)="removeLobby()" class="btn btn-danger">remove lobby</button>
@@ -100,8 +106,10 @@
             <input id="playerName" [(ngModel)]="formPlayerName" type="text"><br>
             <button (click)="addPlayer()" class="btn btn-success">add player</button><br>
             <hr>
-            <label for="playerId">Player ID</label>
-            <input id="playerId" [(ngModel)]="formPlayerId" type="text"><br>
+            <label for="playerId">Player</label>
+            <select name="playerId" id="playerId" [(ngModel)]="formPlayerId">
+              <option *ngFor="let p of playersService.getPlayers()"value="{{p.id}}">{{p.name}}</option>
+            </select>
             <button (click)="removePlayer()" class="btn btn-danger">remove player</button>
           </div>
         </div>
